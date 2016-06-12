@@ -39,7 +39,7 @@ target_link_libraries(ecto_streamer_serv
   )
 
 set_target_properties(ecto_streamer_serv PROPERTIES
-    COMPILE_FLAGS "-fpic -Wall -Werror"
+    COMPILE_FLAGS "-fpic -Wall"
     )
 
 add_executable(httpserv  main.cpp)
@@ -56,19 +56,3 @@ install(TARGETS ecto_streamer_serv
   COMPONENT main
 )
 
-find_package(ecto)
-if(ecto_FOUND)
-    ecto_python_env_gen(${CMAKE_BINARY_DIR}/lib)
-    ectomodule(mjpeg_server
-       module.cpp
-       cell_parameter_handlers.cpp
-    )
-    link_ecto(mjpeg_server
-      ecto_streamer_serv
-      streamer_json_spirit
-      boost_thread boost_system boost_regex
-      ${OpenCV_LIBS}
-    )
-    install_ecto_module(mjpeg_server)
-endif()
-  
